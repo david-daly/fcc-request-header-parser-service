@@ -17,3 +17,10 @@ To start the app locally:
 `http://localhost:5001/whoami`
 
 ### Example output:
+`
+{
+    "ipaddress": "localhost:5001",
+    "language": "en-GB",
+    "system": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+}
+`
