@@ -1,0 +1,24 @@
+service: fcc-url-header-parser-microservice
+
+provider: 
+  name: aws
+  runtime: nodejs6.10
+
+functions:
+  timestampMicroservice:
+    handler: src/app.handler
+    timeout: 10
+
+    events:
+      - http:
+          path: whoami
+          method: get
+          cors: true
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    port: 5001
