@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import 'mocha';
 import { URLHeaderParserService } from '../src/services/header-parser.service';
 
-const validIp = 'localhost:5001';
+const validIp = '127.0.0.1';
 const validLanguage = 'en-GB,en-US;q=0.9,en;q=0.8';
 const validSystemInfo = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)';
 
@@ -10,8 +10,12 @@ const createEvent = (ipaddress, system, language) => {
     return {
         headers: {
             'Accept-Language': language,
-            'Host': ipaddress,
             'User-Agent': system,
+        },
+        requestContext: {
+            identity: {
+                sourceIp: ipaddress,
+            },
         },
     };
 };
@@ -23,7 +27,7 @@ describe('Get User Details', () => {
                 const service = new URLHeaderParserService(event);
                 const result = service.getUserDetails();
 
-                expect(result.ipaddress).to.equal('localhost:5001');
+                expect(result.ipaddress).to.equal('127.0.0.1');
                 expect(result.language).to.equal('en-GB');
                 expect(result.system).to.equal(validSystemInfo);
             });
@@ -47,7 +51,7 @@ describe('Get User Details', () => {
             const service = new URLHeaderParserService(event);
             const result = service.getUserDetails();
 
-            expect(result.ipaddress).to.equal('localhost:5001');
+            expect(result.ipaddress).to.equal('127.0.0.1');
             expect(result.language).to.equal(null);
             expect(result.system).to.equal(validSystemInfo);
         });
@@ -59,7 +63,7 @@ describe('Get User Details', () => {
             const service = new URLHeaderParserService(event);
             const result = service.getUserDetails();
 
-            expect(result.ipaddress).to.equal('localhost:5001');
+            expect(result.ipaddress).to.equal('127.0.0.1');
             expect(result.language).to.equal('en-GB');
             expect(result.system).to.equal(null);
         });
